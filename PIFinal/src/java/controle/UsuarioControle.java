@@ -4,8 +4,11 @@
  */
 package controle;
 
+import dao.MenuDAO;
+import dao.MenuDAOImp;
 import dao.UsuarioDAO;
 import dao.UsuarioDAOImp;
+import entidade.Menus;
 import entidade.Pessoa;
 import entidade.Usuario;
 import java.sql.Array;
@@ -27,7 +30,8 @@ public class UsuarioControle {
 
     private Usuario usu;
     private UsuarioDAO udao;
-    private List menus;
+    private List<Menus> menus;
+    private MenuDAO mdao;
 //##############################################################################    
 
     public Usuario getUsu() {
@@ -62,9 +66,12 @@ public class UsuarioControle {
         //entra na pagina padrão
         String retorno = "admin.faces";
         udao = new UsuarioDAOImp();
+        mdao = new MenuDAOImp();
         FacesContext context = FacesContext.getCurrentInstance();
         //pega o usuario qu está logando
         usu = udao.pesquisaUsuario(usu.getLogin(), usu.getSenha());
+        //seta os menus do usuario
+        usu.getPerfil().setMenus(mdao.pesquisaAcesso(usu.getPerfil()));
         //se login incorredo, dá aviso e volta pra index
         if (usu == null) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Login inexistente!"));
@@ -76,12 +83,20 @@ public class UsuarioControle {
                     getCurrentInstance().getExternalContext().getSession(false);
             session.setAttribute("autenticado", usu);
             session.setAttribute("pagina", retorno);
-            menus = usu.getPerfil().getMenus();
         }
         return retorno;
     }
 //##############################################################################        
 
+    public String sair(){
+        HttpSession session = (HttpSession) FacesContext.
+                    getCurrentInstance().getExternalContext().getSession(false);
+            session.invalidate(); 
+            limpar();
+            return "index.faces";
+    }
+//##############################################################################        
+    
     private void limpar() {
         usu = null;
         menus = null;

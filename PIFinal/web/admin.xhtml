@@ -17,9 +17,10 @@
         <p:layout fullPage="true">
 
             <p:layoutUnit position="north" size="100" >
-                <h:panelGrid columns="2" cellpadding="2" width="300" style=" padding-top: 3%">
+                <h:panelGrid columns="2" cellpadding="1" width="300" style=" padding-top: 3%">
                     <h:outputText value="Olá #{usuC.usu.colaborador.nome}" /><br/>
-                    <h:outputText value="Perfil: #{usuC.usu.perfil.nome}" />
+                    <h:outputText value="Perfil: #{usuC.usu.perfil.nome}"/>&nbsp;
+                    <p:commandLink value="Sair" action="#{usuC.sair()}" />
                 </h:panelGrid>
             </p:layoutUnit>
 
@@ -33,13 +34,14 @@
                                 </h:form>-->
             </p:layoutUnit>
 
+            <ui:insert name="center">
+                <p:layoutUnit position="center">
+                    <h:form>
+                        This fullPage layout consists of five different layoutUnits which are resizable and closable by default.
 
-            <p:layoutUnit position="center">
-                <h:form>
-                    This fullPage layout consists of five different layoutUnits which are resizable and closable by default.
-
-                </h:form>
-            </p:layoutUnit>
+                    </h:form>
+                </p:layoutUnit>
+            </ui:insert>
 
         </p:layout>
 

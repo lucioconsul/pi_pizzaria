@@ -6,6 +6,7 @@ package entidade;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +17,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.IndexColumn;
+import org.hibernate.annotations.Sort;
+import org.hibernate.annotations.SortType;
 
 /**
  *
@@ -34,6 +41,7 @@ public class Perfil implements Serializable {
     @JoinTable(name="menu_perfil",
                 joinColumns=@JoinColumn(name="id_perfil"),
                 inverseJoinColumns=@JoinColumn(name="id_menu"))
+    @IndexColumn(name="id")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Menus> menus;
 
@@ -43,6 +51,12 @@ public class Perfil implements Serializable {
                 inverseJoinColumns=@JoinColumn(name="id_acesso"))
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Acessos> acessos;
+    
+    
+
+
+
+    
     
     public Long getId() {
         return id;
@@ -75,6 +89,9 @@ public class Perfil implements Serializable {
     public void setAcessos(List<Acessos> acessos) {
         this.acessos = acessos;
     }
+
+
+
     
 
 }
