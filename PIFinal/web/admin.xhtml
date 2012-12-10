@@ -29,9 +29,9 @@
             </p:layoutUnit>
 
             <p:layoutUnit position="west" size="200" header="Menu" >
-                <!--                <h:form>
-                                    <ui:include src="../templates/themeMenu.xhtml" />
-                                </h:form>-->
+                <h:form>
+                    <p:menu model="#{menuC.menuModel}"/>
+                </h:form>
             </p:layoutUnit>
 
             <ui:insert name="center">
