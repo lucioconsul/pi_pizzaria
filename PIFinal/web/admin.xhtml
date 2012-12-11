@@ -24,13 +24,47 @@
                 </h:panelGrid>
             </p:layoutUnit>
 
-            <p:layoutUnit position="south" size="100" >
+            <p:layoutUnit position="south" size="90" >
                 <h:outputText value="South unit content." />
             </p:layoutUnit>
 
             <p:layoutUnit position="west" size="200" header="Menu" >
                 <h:form>
-                    <p:menu model="#{menuC.menuModel}"/>
+                    <h:form>
+
+                        <p:growl id="messages" autoUpdate="true"/>
+
+                        <p:panelMenu style="width:192px">
+                            <p:submenu label="Pedidos">
+                                <p:menuitem value="Novo" url="cadPedido.faces"  />
+                                <p:menuitem value="Visualizar"  />
+                                <p:menuitem value="Alterar"  />
+                                <p:menuitem value="Excluir"  />
+                            </p:submenu>
+                            <p:submenu label="Usuários" >
+                                <p:submenu label="Colaboradores" icon="ui-icon-extlink">
+                                    <p:submenu label="Usuarios" >
+                                        <p:menuitem value="Cadastro" url="http://www.primefaces.org"  />
+                                        <p:menuitem value="Busca" url="http://www.primefaces.org/documentation.html"  />
+                                        <p:menuitem value="Teste" url="http://www.primefaces.org/downloads.html"  />
+                                    </p:submenu>
+                                    <p:submenu label="Perfis">
+                                        <p:menuitem value="Cadastro" url="http://www.primefaces.org"  />
+                                    </p:submenu>
+                                </p:submenu>
+                                <p:menuitem value="Visitantes" icon="ui-icon-extlink" url="teste"/>
+                            </p:submenu>
+                            <p:separator />
+
+                            <p:submenu label="Relatórios">
+                                <p:menuitem value="Teste"   ajax="false" />
+                            </p:submenu>
+                        </p:panelMenu>
+
+                    </h:form>
+
+
+                    <!--<p:menu model="{menuC.getmModel()}"/>-->
                 </h:form>
             </p:layoutUnit>
 

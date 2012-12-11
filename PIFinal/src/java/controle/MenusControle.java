@@ -6,6 +6,7 @@ package controle;
 
 import entidade.Menus;
 import entidade.Usuario;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -28,37 +29,6 @@ public class MenusControle {
     private Menus menu;
     private MenuModel mModel;
 
-    public Usuario getUsu() {
-        return usu;
-    }
-
-    public void setUsu(Usuario usu) {
-        this.usu = usu;
-    }
-
-    public Menus getMenu() {
-        return menu;
-    }
-
-    public void setMenu(Menus menu) {
-        this.menu = menu;
-    }
-
-    public MenuModel getmModel() {
-        return mModel;
-    }
-
-    public void setmModel(MenuModel mModel) {
-        this.mModel = mModel;
-    }
-
-/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
-/*CONSTRUTOR chama o geraMenu                                                  */    
-/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/    
-    public MenusControle() {
-        geraMenu();
-    }
-    
 /*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
 /* metodo principal que cria os menus pais e chama os demais metodos que por   */
 /* sua vez criam os submenus                                                   */
@@ -86,8 +56,8 @@ public class MenusControle {
                         menuItem.setValue(subMenuDaLista.getLabel());
                         menuItem.setOnclick(subMenuDaLista.getUrl());
                         menuPai.getChildren().add(menuItem);
-                    //se o menu filho TEM filhos (netos), monto eles:    
-                    }else{
+                        //se o menu filho TEM filhos (netos), monto eles:    
+                    } else {
                         Submenu menuFilhoDoMeio = new Submenu();
                         menuFilhoDoMeio.setLabel(subMenuDaLista.getLabel());
                         //chamo metodo que vai montar os submenus e subitens
@@ -99,7 +69,7 @@ public class MenusControle {
             }
         }
     }
-    
+
 /*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
 /* metodo recursivo. ele chama ele mesmo até terminar de montar a arvore       */
 /* passando por todas as gerações                                              */
@@ -115,19 +85,19 @@ public class MenusControle {
                 mi.setValue(m.getLabel());
                 mi.setUrl(m.getUrl());
                 submenu.getChildren().add(mi);
-            //se tem filhos, chama novamente este mesmo método
+                //se tem filhos, chama novamente este mesmo método
             } else {
                 submenu.getChildren().add(geraSubMenu(m));
             }
         }
         return submenu;
     }
- 
+
 /*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
 /*metodo que pega os menus filhos                                              */
-/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/    
-    public List<Menus> getMenusFilhos(Menus mf){
-        List<Menus> menusFilhos = null;
+/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
+    public List<Menus> getMenusFilhos(Menus mf) {
+        List<Menus> menusFilhos = new ArrayList();
         //pego sessão
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().
                 getExternalContext().getSession(false);
@@ -135,9 +105,10 @@ public class MenusControle {
         usu = (Usuario) session.getAttribute("autenticado");
         //pego lista de menus do usuario e percorro
         List<Menus> listaMenu = usu.getPerfil().getMenus();
-        for (Menus menus : listaMenu) {
-            if (mf.getId().toString().equals(menus.getId_menu_pai())){
-                menusFilhos.add(menus);//####################################### nao está adicionando: Não é possível criar instância para·a classe: controle.MenusControle.
+        for (Menus menus1 : listaMenu) {
+            Menus menus = (Menus) menus1;
+            if (mf.getId().toString().equals(menus.getId_menu_pai())) {
+                menusFilhos.add(menus);
             }
         }
         return menusFilhos;
@@ -145,7 +116,7 @@ public class MenusControle {
 
 /*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
 /*verifica se tem submenus                                                     */
-/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/    
+/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
     public boolean verificaSub(Menus mu) {
         boolean flag = false;
         //pego sessão
@@ -157,17 +128,44 @@ public class MenusControle {
         List<Menus> listaMenu = usu.getPerfil().getMenus();
 
         for (Menus menu : listaMenu) {
-            if (mu.getId().toString().equals(menu.getId_menu_pai())){
+            if (mu.getId().toString().equals(menu.getId_menu_pai())) {
                 flag = true;
             }
         }
         return flag;
     }
-    
-    
-}
 
-   
+    public Usuario getUsu() {
+        return usu;
+    }
+
+    public void setUsu(Usuario usu) {
+        this.usu = usu;
+    }
+
+    public Menus getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menus menu) {
+        this.menu = menu;
+    }
+
+    public MenuModel getmModel() {
+        return mModel;
+    }
+
+    public void setmModel(MenuModel mModel) {
+        this.mModel = mModel;
+    }
+    
+/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
+/*CONSTRUTOR chama o geraMenu                                                  */
+/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
+    public MenusControle() {
+        geraMenu();
+    }    
+}
 //    public void geraMenu() {
 //        menuModel = new DefaultMenuModel();
 //        List<Menu> listaMenu = menuDAO.listaTodos(); // Substituir o listaTodos() pelos menus permitidos
