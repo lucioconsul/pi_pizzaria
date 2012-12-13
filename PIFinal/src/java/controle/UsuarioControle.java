@@ -76,7 +76,7 @@ public class UsuarioControle {
         if (usu == null) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Login inexistente!"));
             limpar();
-            retorno = "index.faces";
+            retorno = "logar.faces";
         //se logou, autentica no filtro e carrega menus do cara
         } else {
             HttpSession session = (HttpSession) FacesContext.
@@ -93,7 +93,7 @@ public class UsuarioControle {
                     getCurrentInstance().getExternalContext().getSession(false);
             session.invalidate(); 
             limpar();
-            return "index.faces";
+            return "logar.faces";
     }
 //##############################################################################        
     

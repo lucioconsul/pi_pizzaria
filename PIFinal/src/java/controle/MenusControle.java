@@ -57,7 +57,8 @@ public class MenusControle {
                     if (!verificaSub(subMenuDaLista)) {
                         MenuItem menuItem = new MenuItem();
                         menuItem.setValue(subMenuDaLista.getLabel());
-                        menuItem.setOnclick(subMenuDaLista.getUrl());
+                        menuItem.setAjax(false);
+                        menuItem.setUrl(subMenuDaLista.getUrl());
                         menuPai.getChildren().add(menuItem);
                         //se o menu filho TEM filhos (netos), monto eles:    
                     } else {

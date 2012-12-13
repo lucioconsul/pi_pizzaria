@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./admin.xhtml">
+    <h:head>
+        <title>Pedido</title>
+         <link type="text/css" rel="stylesheet" href="jquery-ui-1.9.2.custom.css" />
+
+    </h:head>
+
+    <ui:define name="center">
+        <p:layoutUnit position="center" >
+
+            <h:panelGrid id="painel" >
+                <h:outputText  value="Nome:" />
+                <p:inputText id="nome" value="" required="true" requiredMessage="Campo nome é obrigatorio! "/>
+
+                <p:commandButton value="salvar" action="#" />
+            </h:panelGrid>
+
+        </p:layoutUnit>
+    </ui:define>
+
+</ui:composition>
