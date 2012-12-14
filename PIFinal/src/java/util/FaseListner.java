@@ -11,11 +11,13 @@ import entidade.Acessos;
 import entidade.Usuario;
 import java.util.List;
 import javax.faces.application.NavigationHandler;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -30,10 +32,12 @@ public class FaseListner implements PhaseListener {
         
         
         FacesContext contexto = event.getFacesContext();                        //contexto atual
+        ExternalContext ec = contexto.getExternalContext();  
+        HttpServletResponse response = (HttpServletResponse) ec.getResponse();  // objeto de FacesContext recebe a contexto da requisição acessada nessa Phase.
         String paginaAtual = contexto.getViewRoot().getViewId();                //página que atualmente está interagindo com o ciclo
         boolean isLoginPage = paginaAtual.lastIndexOf("/logar.xhtml") > -1;     //se pagina atual é de login
         HttpSession sessao = (HttpSession) contexto.                            //sessão atual
-                getExternalContext().getSession(false);                         
+                getExternalContext().getSession(false); 
         
         //se for index indo pro logar, deixar ir livre
         if (paginaAtual.lastIndexOf("index.xhtml") > -1) {
@@ -82,6 +86,10 @@ public class FaseListner implements PhaseListener {
                     nh.handleNavigation(contexto, null, decisao);
                 }
         }
+        
+        response.setHeader("Expires", "-1");  
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidade, proxy-revalidade, private, post-check=0, pre-check=0");  
+        response.setHeader("Pragma", "no-cache"); 
     }
 
     public void beforePhase(PhaseEvent event) {
