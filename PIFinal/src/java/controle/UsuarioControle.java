@@ -77,26 +77,26 @@ public class UsuarioControle {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Login inexistente!"));
             limpar();
             retorno = "logar.faces";
-        //se logou, autentica no filtro e carrega menus do cara
+            //se logou, autentica no filtro e carrega menus do cara
         } else {
             HttpSession session = (HttpSession) FacesContext.
                     getCurrentInstance().getExternalContext().getSession(false);
             session.setAttribute("autenticado", usu);
-            session.setAttribute("pagina", retorno);
         }
         return retorno;
     }
 //##############################################################################        
 
-    public String sair(){
+    public String sair() {
         HttpSession session = (HttpSession) FacesContext.
-                    getCurrentInstance().getExternalContext().getSession(false);
-            session.invalidate(); 
-            limpar();
-            return "logar.faces";
+                getCurrentInstance().getExternalContext().getSession(false);
+        session.setAttribute("autenticado", null);
+        session.invalidate();
+        limpar();
+        return "logar.faces";
     }
 //##############################################################################        
-    
+
     private void limpar() {
         usu = null;
         menus = null;
